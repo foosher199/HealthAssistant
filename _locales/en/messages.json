@@ -1,0 +1,129 @@
+{
+  "appName": {
+    "message": "Health Assistant"
+  },
+  "appDesc": {
+    "message": "A Chrome extension that helps users develop good work and life habits"
+  },
+  "nextReminder": {
+    "message": "Next Reminder"
+  },
+  "todayStats": {
+    "message": "Today's Stats"
+  },
+  "timedReminders": {
+    "message": "Timed Reminders"
+  },
+  "settings": {
+    "message": "Settings"
+  },
+  "defaultWorkTime": {
+    "message": "Default Work Hours"
+  },
+  "enableTimeControl": {
+    "message": "Enable Time Control"
+  },
+  "to": {
+    "message": "to"
+  },
+  "saveSettings": {
+    "message": "Save Settings"
+  },
+  "addReminder": {
+    "message": "Add Reminder"
+  },
+  "editReminder": {
+    "message": "Edit Reminder"
+  },
+  "reminderContent": {
+    "message": "Reminder Content"
+  },
+  "reminderInterval": {
+    "message": "Reminder Interval"
+  },
+  "minutes": {
+    "message": "minutes"
+  },
+  "useCustomTime": {
+    "message": "Use Custom Time Range"
+  },
+  "edit": {
+    "message": "Edit"
+  },
+  "delete": {
+    "message": "Delete"
+  },
+  "everyMinutes": {
+    "message": "Every $minutes$ minutes",
+    "placeholders": {
+      "minutes": {
+        "content": "$1"
+      }
+    }
+  },
+  "iKnow": {
+    "message": "Got it"
+  },
+  "iKnowWithTime": {
+    "message": "Got it ($seconds$s)",
+    "placeholders": {
+      "seconds": {
+        "content": "$1"
+      }
+    }
+  },
+  "dearTimeUp": {
+    "message": "Dear, time's up! 🎵"
+  },
+  "keepGoodHabits": {
+    "message": "Let's keep up the good habits! ✨"
+  },
+  "waterReminder": {
+    "message": "Time to drink water!"
+  },
+  "breakReminder": {
+    "message": "Time for a break!"
+  },
+  "eyesReminder": {
+    "message": "Rest your eyes"
+  },
+  "postureReminder": {
+    "message": "Check your posture"
+  },
+  "enterReminderContent": {
+    "message": "Enter reminder content"
+  },
+  "intervalTime": {
+    "message": "Interval time"
+  },
+  "save": {
+    "message": "Save"
+  },
+  "waterCount": {
+    "message": "Water Count"
+  },
+  "breakCount": {
+    "message": "Break Count"
+  },
+  "settingsSaved": {
+    "message": "Settings saved"
+  },
+  "pleaseEnterValid": {
+    "message": "Please enter valid reminder content and interval"
+  },
+  "pleaseSetValidTime": {
+    "message": "Please set valid time range"
+  },
+  "endTimeMustBeLater": {
+    "message": "End time must be later than start time"
+  },
+  "editSaved": {
+    "message": "Changes saved"
+  },
+  "reminderAdded": {
+    "message": "Reminder added"
+  },
+  "reminderTitle": {
+    "message": "🌟 Health Reminder 🌟"
+  }
+} 

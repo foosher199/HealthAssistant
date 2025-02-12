@@ -1,0 +1,129 @@
+{
+  "appName": {
+    "message": "健康助手"
+  },
+  "appDesc": {
+    "message": "一个帮助用户养成良好工作和生活习惯的 Chrome 扩展"
+  },
+  "nextReminder": {
+    "message": "下次提醒"
+  },
+  "todayStats": {
+    "message": "今日统计"
+  },
+  "timedReminders": {
+    "message": "定时提醒"
+  },
+  "settings": {
+    "message": "设置"
+  },
+  "defaultWorkTime": {
+    "message": "默认生效时间"
+  },
+  "enableTimeControl": {
+    "message": "启用默认时间控制"
+  },
+  "to": {
+    "message": "至"
+  },
+  "saveSettings": {
+    "message": "保存设置"
+  },
+  "addReminder": {
+    "message": "添加提醒"
+  },
+  "editReminder": {
+    "message": "修改提醒"
+  },
+  "reminderContent": {
+    "message": "提醒内容"
+  },
+  "reminderInterval": {
+    "message": "提醒间隔"
+  },
+  "minutes": {
+    "message": "分钟"
+  },
+  "useCustomTime": {
+    "message": "使用独立时间段"
+  },
+  "edit": {
+    "message": "编辑"
+  },
+  "delete": {
+    "message": "删除"
+  },
+  "everyMinutes": {
+    "message": "每 $minutes$ 分钟",
+    "placeholders": {
+      "minutes": {
+        "content": "$1"
+      }
+    }
+  },
+  "iKnow": {
+    "message": "我知道了"
+  },
+  "iKnowWithTime": {
+    "message": "我知道了 ($seconds$s)",
+    "placeholders": {
+      "seconds": {
+        "content": "$1"
+      }
+    }
+  },
+  "dearTimeUp": {
+    "message": "亲爱的，时间到啦！ 🎵"
+  },
+  "keepGoodHabits": {
+    "message": "让我们一起保持好习惯吧！ ✨"
+  },
+  "waterReminder": {
+    "message": "该喝水了！"
+  },
+  "breakReminder": {
+    "message": "该休息了！"
+  },
+  "eyesReminder": {
+    "message": "让眼睛休息一下"
+  },
+  "postureReminder": {
+    "message": "检查一下坐姿是否正确"
+  },
+  "enterReminderContent": {
+    "message": "请输入提醒内容"
+  },
+  "intervalTime": {
+    "message": "间隔时间"
+  },
+  "save": {
+    "message": "保存"
+  },
+  "waterCount": {
+    "message": "喝水次数"
+  },
+  "breakCount": {
+    "message": "休息次数"
+  },
+  "settingsSaved": {
+    "message": "设置已保存"
+  },
+  "pleaseEnterValid": {
+    "message": "请输入有效的提醒内容和时间间隔"
+  },
+  "pleaseSetValidTime": {
+    "message": "请设置有效的时间段"
+  },
+  "endTimeMustBeLater": {
+    "message": "结束时间必须晚于开始时间"
+  },
+  "editSaved": {
+    "message": "修改已保存"
+  },
+  "reminderAdded": {
+    "message": "提醒已添加"
+  },
+  "reminderTitle": {
+    "message": "🌟 健康小提醒 🌟"
+  }
+} 
