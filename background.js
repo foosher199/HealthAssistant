@@ -138,7 +138,8 @@ async function isWithinWorkHours(type, index = -1) {
 
 // 处理提醒
 chrome.alarms.onAlarm.addListener(async (alarm) => {
-  console.log('Alarm triggered:', alarm.name);
+  // 需要移除或注释的调试日志
+  // console.log('Alarm triggered:', alarm.name);
   
   if (alarm.name.startsWith('customReminder_')) {
     const index = parseInt(alarm.name.split('_')[1]);
@@ -219,7 +220,8 @@ chrome.windows.onRemoved.addListener((windowId) => {
 function showReminderWindow(reminder) {
   // 创建新窗口的函数
   function createNewWindow() {
-    console.log('Creating reminder window for:', reminder.text);
+    // 需要移除或注释的调试日志
+    // console.log('Creating reminder window for:', reminder.text);
     chrome.system.display.getInfo((displays) => {
       const display = displays[0];
       const width = Math.round(display.bounds.width * 0.6);
@@ -240,7 +242,8 @@ function showReminderWindow(reminder) {
         focused: true,
         state: 'normal'
       }, (window) => {
-        console.log('New window created:', window.id);
+        // 需要移除或注释的调试日志
+        // console.log('New window created:', window.id);
         activeReminderWindowId = window.id;
       });
     });
@@ -252,7 +255,8 @@ function showReminderWindow(reminder) {
       // 尝试关闭现有窗口
       chrome.windows.remove(activeReminderWindowId, () => {
         if (chrome.runtime.lastError) {
-          console.log('Error closing window:', chrome.runtime.lastError.message);
+          // 需要移除或注释的调试日志
+          // console.log('Error closing window:', chrome.runtime.lastError.message);
         }
         activeReminderWindowId = null;
         resolve();
@@ -272,7 +276,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     resetAlarms();
     sendResponse({ success: true });
   } else if (message.action === 'closeReminderWindow') {
-    console.log('Attempting to close window:', message.windowId);
+    // 需要移除或注释的调试日志
+    // console.log('Attempting to close window:', message.windowId);
     
     // 检查窗口是否存在
     chrome.windows.get(message.windowId, (window) => {

@@ -550,8 +550,8 @@ function loadStats() {
   chrome.storage.local.get(['customReminders'], (result) => {
     const reminders = result.customReminders;
     if (!reminders) {
-      console.error('No reminders found when loading stats');
-      return;
+      // 不需要移除错误日志
+      updateStatsList(reminders);
     } else {
       updateStatsList(reminders);
     }

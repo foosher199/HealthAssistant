@@ -126,7 +126,8 @@ function playSound(type = 'notification') {
       audioContext.close();
     }, 1000);
   } catch (error) {
-    console.log('播放音效失败:', error);
+    // 需要移除的错误日志
+    // console.log('播放音效失败:', error);
   }
 }
 
