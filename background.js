@@ -87,19 +87,19 @@ async function isWithinWorkHours(type, index = -1) {
       'enableWorkTime',
       'workStartTime',
       'workEndTime',
-      'waterTimeSettings',
-      'breakTimeSettings',
       'customReminders'
     ], resolve);
   });
 
+  // 如果未启用时间控制，则始终返回true
+  if (!settings.enableWorkTime) {
+    console.log('Work time control is disabled');
+    return true;
+  }
+
   // 获取要使用的时间设置
   let timeSettings;
-  if (type === 'water' && settings.waterTimeSettings?.useCustomTime) {
-    timeSettings = settings.waterTimeSettings;
-  } else if (type === 'break' && settings.breakTimeSettings?.useCustomTime) {
-    timeSettings = settings.breakTimeSettings;
-  } else if (type === 'custom' && index >= 0) {
+  if (type === 'custom' && index >= 0) {
     const reminder = settings.customReminders?.[index];
     if (reminder?.timeSettings?.useCustomTime) {
       timeSettings = reminder.timeSettings;
@@ -108,9 +108,6 @@ async function isWithinWorkHours(type, index = -1) {
 
   // 如果没有独立时间设置，使用全局设置
   if (!timeSettings) {
-    if (!settings.enableWorkTime) {
-      return true; // 如果未启用时间控制，则始终返回true
-    }
     timeSettings = {
       startTime: settings.workStartTime || '09:00',
       endTime: settings.workEndTime || '18:00'
@@ -127,7 +124,16 @@ async function isWithinWorkHours(type, index = -1) {
   const startTime = startHour * 60 + startMinute;
   const endTime = endHour * 60 + endMinute;
 
-  return currentTime >= startTime && currentTime <= endTime;
+  const isWithinTime = currentTime >= startTime && currentTime <= endTime;
+  console.log('Time check:', {
+    currentTime,
+    startTime,
+    endTime,
+    isWithinTime,
+    timeSettings
+  });
+
+  return isWithinTime;
 }
 
 // 处理提醒
@@ -136,6 +142,14 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
   
   if (alarm.name.startsWith('customReminder_')) {
     const index = parseInt(alarm.name.split('_')[1]);
+    
+    // 先检查是否在有效时间段内
+    const isWorkTime = await isWithinWorkHours('custom', index);
+    if (!isWorkTime) {
+      console.log('Outside of work hours, skipping reminder');
+      return;
+    }
+
     chrome.storage.local.get(['customReminders'], (result) => {
       const reminders = result.customReminders || DEFAULT_SETTINGS.customReminders;
       const reminder = reminders[index];
@@ -213,8 +227,11 @@ function showReminderWindow(reminder) {
       const left = Math.round((display.bounds.width - width) / 2);
       const top = Math.round((display.bounds.height - height) / 2);
 
+      // 确保提醒文本被正确编码
+      const reminderText = encodeURIComponent(reminder.text);
+      
       chrome.windows.create({
-        url: `reminder.html?text=${encodeURIComponent(reminder.text)}`,
+        url: `reminder.html?text=${reminderText}`,
         type: 'popup',
         width: width,
         height: height,

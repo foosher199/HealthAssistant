@@ -11,14 +11,30 @@ const urlParams = new URLSearchParams(window.location.search);
 const text = decodeURIComponent(urlParams.get('text'));
 
 // 设置提醒内容
-// 如果有传入的提醒文本，就使用它，否则使用默认标题
-const title = text || chrome.i18n.getMessage('reminderTitle');
-document.getElementById('reminderTitle').textContent = title;
+// 如果有传入的提醒文本，就使用它作为标题
+document.getElementById('reminderTitle').textContent = text || chrome.i18n.getMessage('reminderTitle');
 
+// 设置提醒消息，添加提醒标题并优化样式
 document.getElementById('reminderMessage').innerHTML = `
+  <p class="reminder-title">${text}</p>
   <p>${chrome.i18n.getMessage('dearTimeUp')}</p>
   <p>${chrome.i18n.getMessage('keepGoodHabits')}</p>
 `;
+
+// 动态添加样式
+const style = document.createElement('style');
+style.textContent = `
+  .reminder-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #2196F3;
+    margin-bottom: 16px;
+    text-align: center;
+    padding: 8px;
+    border-bottom: 2px solid #2196F3;
+  }
+`;
+document.head.appendChild(style);
 
 // 自动关闭计时器
 let autoCloseTimer;

@@ -171,8 +171,89 @@ function loadSettings() {
     'workEndTime',
   ], (settings) => {
     document.getElementById('enableWorkTime').checked = settings.enableWorkTime ?? true;
-    document.getElementById('workStartTime').value = settings.workStartTime || '09:00';
-    document.getElementById('workEndTime').value = settings.workEndTime || '18:00';
+    
+    // 设置时间输入框的类型和默认值
+    const startTimeInput = document.getElementById('workStartTime');
+    const endTimeInput = document.getElementById('workEndTime');
+    
+    // 设置输入框类型和属性
+    [startTimeInput, endTimeInput].forEach(input => {
+      input.type = 'time';
+      input.setAttribute('step', '900'); // 每15分钟
+      input.setAttribute('data-format', '24h');
+    });
+    
+    // 添加样式
+    const style = document.createElement('style');
+    style.textContent = `
+      input[type="time"][data-format="24h"] {
+        width: 110px;
+        padding: 4px 6px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+        color: #333;
+        cursor: pointer;
+        position: relative;
+      }
+      
+      /* 自定义时间输入框的内部布局 */
+      input[type="time"][data-format="24h"]::-webkit-datetime-edit {
+        display: flex;
+        padding: 0;
+        margin-right: 16px;  /* 增加右边距，为时间选择器箭头留出更多空间 */
+      }
+      
+      /* 调整时间段显示 */
+      input[type="time"][data-format="24h"]::-webkit-datetime-edit-ampm-field {
+        display: inline-block;
+        min-width: 35px;
+        padding-right: 2px;  /* 减小右边距 */
+        color: #666;
+      }
+      
+      /* 调整时间显示 */
+      input[type="time"][data-format="24h"]::-webkit-datetime-edit-hour-field,
+      input[type="time"][data-format="24h"]::-webkit-datetime-edit-minute-field {
+        padding: 0;  /* 移除内边距 */
+        color: #333;
+      }
+      
+      /* 调整时间分隔符 */
+      input[type="time"][data-format="24h"]::-webkit-datetime-edit-text {
+        color: #666;
+        padding: 0 1px;  /* 减小分隔符的内边距 */
+      }
+      
+      /* 调整时间选择器箭头位置 */
+      input[type="time"][data-format="24h"]::-webkit-calendar-picker-indicator {
+        display: inline-block;
+        opacity: 0.7;
+        cursor: pointer;
+        padding: 0;
+        margin-left: 0;
+      }
+      
+      input[type="time"][data-format="24h"]:focus {
+        outline: none;
+        border-color: #2196F3;
+        box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+      }
+      
+      input[type="time"][data-format="24h"]::-webkit-calendar-picker-indicator:hover {
+        opacity: 1;
+      }
+      
+      /* 隐藏上下箭头 */
+      input[type="time"][data-format="24h"]::-webkit-inner-spin-button {
+        display: none;
+      }
+    `;
+    document.head.appendChild(style);
+    
+    // 设置初始值
+    startTimeInput.value = settings.workStartTime || '09:00';
+    endTimeInput.value = settings.workEndTime || '18:00';
   });
 }
 
@@ -603,4 +684,40 @@ function initI18n() {
     chrome.i18n.getMessage('enterReminderContent');
   document.getElementById('customReminderInterval').placeholder = 
     chrome.i18n.getMessage('intervalTime');
+}
+
+// 保存设置
+function saveSettings() {
+  const enableWorkTime = document.getElementById('enableWorkTime').checked;
+  const workStartTime = document.getElementById('workStartTime').value;
+  const workEndTime = document.getElementById('workEndTime').value;
+
+  // 验证时间格式
+  if (!workStartTime || !workEndTime) {
+    showToast(chrome.i18n.getMessage('pleaseSetValidTime') || '请设置有效的时间');
+    return;
+  }
+
+  // 验证开始时间是否小于结束时间
+  const [startHour, startMinute] = workStartTime.split(':').map(Number);
+  const [endHour, endMinute] = workEndTime.split(':').map(Number);
+  const startMinutes = startHour * 60 + startMinute;
+  const endMinutes = endHour * 60 + endMinute;
+
+  if (endMinutes <= startMinutes) {
+    showToast(chrome.i18n.getMessage('endTimeMustBeLater') || '结束时间必须晚于开始时间');
+    return;
+  }
+
+  chrome.storage.local.set({
+    enableWorkTime,
+    workStartTime,
+    workEndTime,
+  }, () => {
+    // 添加保存成功的提示
+    showToast(chrome.i18n.getMessage('settingsSaved') || '设置已保存');
+    
+    // 重置定时器以应用新设置
+    chrome.runtime.sendMessage({ action: 'resetAlarms' });
+  });
 } 

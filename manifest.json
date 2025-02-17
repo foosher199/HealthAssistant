@@ -9,8 +9,6 @@
     "alarms",
     "background",
     "windows",
-    "tabs",
-    "scripting",
     "system.display"
   ],
   "background": {
